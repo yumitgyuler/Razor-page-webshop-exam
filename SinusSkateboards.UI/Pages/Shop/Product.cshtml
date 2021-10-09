@@ -1,0 +1,192 @@
+﻿@page
+@model SinusSkateboards.UI.Pages.Shop.ProductModel
+@{
+    var clientCurrency = HttpContext.Request.Cookies["Currency"];
+    var currencyIcon = "";
+    if (clientCurrency == "EUR")
+    {
+        currencyIcon = "€ {0:N2}";
+    }
+    else
+    {
+        currencyIcon = "{0:N2}:-";
+    }
+}
+
+<div style="background-color:#@Model.Product.ProductGroup.BgColor">
+    <div class="row">
+        <div class="col-xl-7 col-12 ">
+            <div class="sticky-xl-top ">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="d-flex flex-column justify-content-center">
+                                <div class="main_image">
+                                    <img class="product-img"
+                                        src="~/images/products/@Model.Product.ProductGroup.Thumbnail" id="123" />
+                                </div>
+                                <div class="thumbnail_images">
+                                    <ul id="thumbnail">
+                                        <li>
+                                            <img id="123" onclick="changeImage(this)"
+                                                src="~/images/products/@Model.Product.ProductGroup.Thumbnail"
+                                                width="100" />
+                                        </li>
+                                        @foreach (var images in Model.Product.ProductGroup.Images)
+                                        {
+                                            <li>
+                                                <img id="123" onclick="changeImage(this)"
+                                                src="~/images/products/@images.Path" width="100" />
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-5 col-12 ps-3 text-xl-start text-center" id="main" style="background-color: white;">
+            <div class="mt-4">
+                <h1>@Model.Product.ProductGroup.Title</h1>
+                <span class="main-color">Category: @Model.Product.ProductGroup.Category.Name</span>
+            </div>
+            <div class="mt-4">
+                <p>@Model.Product.ProductGroup.ShortDescription</p>
+            </div>
+            @if (@Model.Product.DiscountedPrice is 0)
+            {
+                <div>
+                    <span class="discount-price">@String.Format(currencyIcon, @Model.Product.Price)</span>
+
+                </div>
+            }
+            else
+            {
+                <div>
+                    <span class="discount-price">@String.Format(currencyIcon, @Model.Product.DiscountedPrice)</span>
+                    <span class="regular-price pl-2">@String.Format(currencyIcon, @Model.Product.Price)</span>
+                </div>
+            }
+            <form method="post">
+                <div class="mt-5">
+                    <span class="span-title mt-4">SIZE:</span><br>
+                    <div class="radio-toolbar" id="size-radio">
+
+                        @foreach (var size in @Model.Product.ProductGroup.Products)
+                        {
+                            <input type="radio" id="@size.Id" name="cartItem.Id" value="@size.Id"
+                            asp-for="@Model.cartItem.Id">
+                            <label for="@size.Id">@size.ProductAttribute.Name</label>
+                        }
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <button class="btn btn-info quantity-left-minus">-</button>
+                    <input asp-for="@Model.cartItem.Quantity" class="btn btn-info" type="number" id="quantity"
+                        name="cartItem.Quantity" value="1" min="1" max="@Model.Product.Stock">
+                    <button class="btn btn-info quantity-right-plus">+</button>
+                    <button class="btn btn-primary" id="addToCart" disabled>Add to cart</button>
+                </div>
+            </form>
+            <div class="mt-5">
+                <span class="span-title mt-4">OTHER COLORS:</span><br>
+                @foreach (var color in @Model.ProductGroup)
+                {
+                    if (color.Id != @Model.Product.ProductGroupId)
+                    {
+                        <a asp-page="/Shop/Product" asp-route-id="@color.Products[0].Id"><img
+                        src="~/images/products/@color.Thumbnail" width="50" /></a>
+                    }
+                }
+            </div>
+            <div class="mt-5">
+                <span class="span-title mt-4">DESCRIPTION:</span><br>
+                <p>@Model.Product.ProductGroup.DetailDescription</p>
+            </div>
+            <div class="mt-5">
+                <span class="span-title mt-4">SHARE:</span><br>
+                <i class="fa-brands fa-facebook pe-3"></i><i class="fa-brands fa-instagram pe-3"></i><i
+                    class="fa-brands fa-twitter pe-3"></i>
+            </div>
+
+            <div class="mt-5 mb-5">
+                <span class="span-title mt-4">SIMILAR PRODUCTS:</span><br>
+
+                <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000"
+                    data-bs-pause="hover">
+                    <div class="carousel-inner">
+                        @{
+                            var atviceTextisTrue = 0;
+                        }
+                        @foreach (var group in Model.ProductGroups)
+                        {
+                            var result = group.ToList();
+                            var products = result[0].Products.ToList();
+
+                            var active = "";
+                            @if (atviceTextisTrue == 0)
+                            {
+                                active = "active";
+                                atviceTextisTrue++;
+                            }
+                            else
+                            {
+                                active = "";
+                            }
+                            <div class="carousel-item @active">
+                                <div class="card products-card p-4 mt-4 ms-3" style="max-width: 500px;">
+                                    <div class="d-flex flex-column justify-content-center text-center">
+                                        <div class="main_image">
+                                            <img src="~/images/products/@result[0].Thumbnail.ToString()"
+                                            id="@group.Key.ToString()" width="350" />
+                                        </div>
+                                        <div class="thumbnail_images">
+                                            <ul id="thumbnail">
+                                                @foreach (var item in result)
+                                                {
+                                                    <li>
+                                                        <img id="@group.Key.ToString()" onclick="changeImage(this)"
+                                                    src="~/images/products/@item.Thumbnail.ToString()" width="50" />
+                                                    </li>
+                                                }
+                                            </ul>
+                                        </div>
+                                        <div class="product-card-info">
+                                            <h5 class="pt-3">@result[0].Title</h5>
+                                            @if (@products[0].DiscountedPrice is 0)
+                                            {
+                                                <span class="discount-price">@String.Format(currencyIcon,
+                                            @products[0].Price)</span><br>
+                                            }
+                                            else
+                                            {
+                                                <span class="discount-price">@String.Format(currencyIcon,
+                                            @products[0].DiscountedPrice)</span>
+                                                <span class="regular-price pl-2">@String.Format(currencyIcon,
+                                            @products[0].Price)</span><br>
+                                            }
+                                            <a class="btn btn-primary mt-3" asp-page="/Shop/Product"
+                                            asp-route-id="@products[0].Id">Buy Now!</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        @* <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+                            data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+                            data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                            </button> *@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

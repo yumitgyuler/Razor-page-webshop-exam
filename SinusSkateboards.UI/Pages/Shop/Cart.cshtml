@@ -1,0 +1,111 @@
+﻿@page
+@using System.Linq
+@model SinusSkateboards.UI.Pages.Shop.CartModel
+@{
+    var clientCurrency = HttpContext.Request.Cookies["Currency"];
+    var currencyIcon = "";
+    if (clientCurrency == "EUR")
+    {
+        currencyIcon = "€ {0:N2}";
+    }
+    else
+    {
+        currencyIcon = "{0:N2}:-";
+    }
+}
+
+<div style="background-color: #587FCC; color:#fff;">
+    <div class="container">
+        <h3 class="py-5">Shopping Cart</h3>
+    </div>
+</div>
+<div class="container px-2 mt-4">
+    <div class="row">
+        @if (@Model.CartItems is not null)
+        {
+            <div class="col-xl-9 col-12">
+                <div class="table-responsive">
+
+                    <table class="table table-responsive table-borderless">
+                        <thead>
+                            <tr class="bg-light">
+                                <th scope="col"></th>
+                                <th scope="col">Product</th>
+                                <th scope="col" class="text-end">Price</th>
+                                <th scope="col" class="text-end"><span>Quantity</span></th>
+                                <th scope="col" class="text-end"><span>Total</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var product in @Model.CartItems)
+                            {
+                                <tr>
+                                    <td><img src="~/images/products/@product.Image" width="80"></td>
+                                    <td class="align-middle">@product.ProductName</td>
+                                    <td class="text-end align-middle">@String.Format(currencyIcon, @product.Price)</td>
+                                    <td class="text-end align-middle">
+                                        <button class="btn btn-info">-</button>
+                                        <button class="btn btn-info">@product.Quantity</button>
+                                        <button class="btn btn-info">+</button>
+                                    </td>
+                                    <td class="text-end align-middle">
+                                        <span class="fw-bolder">
+                                            @String.Format(currencyIcon, (product.Price * product.Quantity))
+                                        </span>
+                                    </td>
+                                </tr>
+                            }
+                            <tr>
+                                <td><button class="btn btn-primary">Update Cart</button></td>
+                                <td class="align-middle"></td>
+                                <td class="text-end align-middle"></td>
+                                <td class="text-end align-middle"><button class="btn btn-secondary">Clear Cart</button></td>
+                                <td class="text-end align-middle"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-xl-3 col-12">
+                <div class="card">
+                    <h5 class="card-header text-center">Cart Totals</h5>
+                    <div class="card-body ">
+                        @{
+                            var sumPrice = Model.CartItems.Sum(p => p.Price);
+                            var sumExMoms = sumPrice * (decimal)0.8;
+                            var moms = sumPrice - sumExMoms;
+                        }
+                        <span>Subtotals:</span> <span class="float-end">@String.Format(currencyIcon, @sumExMoms)</span>
+                        <hr>
+                        <span>Tax (25%):</span> <span class="float-end">@String.Format(currencyIcon, @moms)</span>
+                        <hr>
+                        <span>Totals:</span> <span class="float-end">@String.Format(currencyIcon, @sumPrice)</span>
+                        <hr>
+                        <a asp-page="/Shop/Checkout" class="btn btn-primary">Proceed To Checkout</a>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="container-fluid mt-100">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body cart">
+                                <div class="col-sm-12 empty-cart-cls text-center"> <img src="~/images/images/cart.png"
+                                    width="130" height="130" class="img-fluid mb-4 mr-3">
+                                    <h3><strong>Your Cart is Empty</strong></h3>
+                                    <h4>Add something to make me happy :)</h4>
+                                    <a class="btn btn-primary m-3" asp-page="/Shop/Categories">continue
+                                        shopping</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+</div>

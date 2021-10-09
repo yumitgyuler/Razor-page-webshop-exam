@@ -1,0 +1,208 @@
+﻿@page
+@model SinusSkateboards.UI.Pages.Shop.CheckoutModel
+@{
+    var clientCurrency = HttpContext.Request.Cookies["Currency"];
+    var currencyIcon = "";
+    if (clientCurrency == "EUR")
+    {
+        currencyIcon = "€ {0:N2}";
+    }
+    else
+    {
+        currencyIcon = "{0:N2}:-";
+    }
+}
+<form method="POST">
+    <div class="container mt-5 px-5">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card p-3">
+                    <div class="mt-4 mb-4">
+                        <h6 class="text-uppercase">Billing Address</h6>
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <div class="inputbox mt-3 mr-2">
+                                    <input type="text" name="BillingAdress.CompanyName" class="form-control"
+                                        asp-for="@Model.BillingAdress.CompanyName">
+                                    <span>Company Name</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <div class="inputbox mt-3 mr-2">
+                                    <input type="text" name="BillingAdress.FirstName" class="form-control"
+                                        required="required" asp-for="@Model.BillingAdress.FirstName">
+                                    <span>First Name</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="inputbox mt-3 mr-2">
+                                    <input type="text" name="BillingAdress.LastName" class="form-control"
+                                        required="required" asp-for="@Model.BillingAdress.LastName">
+                                    <span>Last Name</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <div class="inputbox mt-3 mr-2">
+                                    <input type="text" name="BillingAdress.Street" class="form-control"
+                                        required="required" asp-for="@Model.BillingAdress.Street">
+                                    <span>Street Address</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="inputbox mt-3 mr-2">
+                                    <input type="text" name="BillingAdress.City" class="form-control"
+                                        required="required" asp-for="@Model.BillingAdress.City">
+                                    <span>City</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <div class="inputbox mt-3 mr-2">
+                                    <input type="text" name="BillingAdress.Zip" class="form-control" required="required"
+                                        asp-for="@Model.BillingAdress.Zip">
+                                    <span>Zip code</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="inputbox mt-3 mr-2">
+                                    <input type="text" name="BillingAdress.Country" class="form-control"
+                                        required="required" asp-for="@Model.BillingAdress.Country">
+                                    <span>Country</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <div class="inputbox mt-3 mr-2">
+                                    <input type="text" name="BillingAdress.PhoneNumber" class="form-control"
+                                        required="required" asp-for="@Model.BillingAdress.PhoneNumber">
+                                    <span>Phone Number</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="inputbox mt-3 mr-2">
+                                    <input type="text" name="BillingAdress.Email" class="form-control"
+                                        required="required" asp-for="@Model.BillingAdress.Email">
+                                    <span>E-mail</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <label>
+                        <input type="checkbox" name="BillingAdress.ShipToOtherAdress" value="ShippingAdress"
+                            asp-for="@Model.BillingAdress.ShipToOtherAdress" value="true"
+                            onclick="showMe('form-ShippingAdress')">
+                        Delivery to other address?
+                    </label>
+
+                    <div class="mt-4 mb-4 form form-ShippingAdress" id="form-ShippingAdress" style="display:none;">
+                        <h6 class="text-uppercase">Shipping Address</h6>
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <div class="inputbox mt-3 mr-2">
+                                    <input type="text" name="ShipingAdress.FirstName" class="form-control"
+                                        required="required" asp-for="@Model.ShipingAdress.FirstName">
+                                    <span>First Name</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="inputbox mt-3 mr-2">
+                                    <input type="text" name="ShipingAdress.LastName" class="form-control"
+                                        required="required" asp-for="@Model.ShipingAdress.LastName">
+                                    <span>Last Name</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <div class="inputbox mt-3 mr-2">
+                                    <input type="text" name="ShipingAdress.Street" class="form-control"
+                                        asp-for="@Model.ShipingAdress.Street">
+                                    <span>Street Address</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="inputbox mt-3 mr-2">
+                                    <input type="text" name="ShipingAdress.City" class="form-control"
+                                        asp-for="@Model.ShipingAdress.City">
+                                    <span>City</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <div class="inputbox mt-3 mr-2">
+                                    <input type="text" name="ShipingAdress.Zip" class="form-control"
+                                        asp-for="@Model.ShipingAdress.Zip">
+                                    <span>Zip code</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="inputbox mt-3 mr-2">
+                                    <input type="text" name="ShipingAdress.Country" class="form-control"
+                                        asp-for="@Model.ShipingAdress.Country">
+                                    <span>Country</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 mb-4">
+                        <h6 class="text-uppercase">Payment details</h6>
+                        <div class="inputbox mt-3">
+                            <input type="text" name="name" class="form-control">
+                            <span>Name on card</span>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="inputbox mt-3 mr-2">
+                                    <input type="text" name="name" class="form-control">
+                                    <i class="fa fa-credit-card"></i>
+                                    <span>Card Number</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="d-flex flex-row">
+                                    <div class="inputbox mt-3 mr-2">
+                                        <input type="text" name="name" class="form-control">
+                                        <span>Expir</span>
+                                    </div>
+                                    <div class="inputbox mt-3 mr-2">
+                                        <input type="text" name="name" class="form-control">
+                                        <span>CVV</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <h5 class="card-header text-center">Cart Totals</h5>
+                    <div class="card-body ">
+                        @{
+                            var sumPrice = Model.CartItems.Sum(p => p.Price);
+                            var sumExMoms = sumPrice * (decimal)0.8;
+                            var moms = sumPrice - sumExMoms;
+                        }
+                        <span>Subtotals:</span> <span class="float-end">@String.Format(currencyIcon, @sumExMoms)</span>
+                        <hr>
+                        <span>Tax:</span> <span class="float-end">@String.Format(currencyIcon, @moms)</span>
+                        <hr>
+                        <span>Totals:</span> <span class="float-end">@String.Format(currencyIcon, @sumPrice)</span>
+                        <hr>
+                        <button class="btn btn-primary">Checkout</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

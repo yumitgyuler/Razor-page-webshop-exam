@@ -1,0 +1,102 @@
+﻿@page
+@model MyApp.Namespace.AddProductModel
+@{
+    Layout = "../Shared/_Dasboard.cshtml";
+}
+
+<div class="row ms-5 mt-5">
+    <form method="POST" enctype="multipart/form-data">
+        <div class="col-6">
+            <h3>Product</h3>
+            <div class="mb-3">
+                <span class="fw-bold"><label class="form-label">Parrent
+                        Sku</label></span>
+                <input type="text" name="ProductGroup.ParrentSku" class="form-control"
+                    asp-for="@Model.ProductGroup.ParrentSku" required>
+            </div>
+            <div class="mb-3">
+                <span class="fw-bold"><label class="form-label">Title</label></span>
+                <input type="text" name="ProductGroup.Title" class="form-control" asp-for="@Model.ProductGroup.Title"
+                    required>
+            </div>
+            <div class="mb-3">
+                <span class="fw-bold"><label class="form-label">Short
+                        Description</label></span>
+                <textarea name="ProductGroup.ShortDescription" class="form-control"
+                    asp-for="@Model.ProductGroup.ShortDescription" required></textarea>
+            </div>
+            <div class="mb-3">
+                <span class="fw-bold"><label class="form-label">Detail
+                        Description</label></span>
+                <textarea name="ProductGroup.DetailDescription" class="form-control"
+                    asp-for="@Model.ProductGroup.DetailDescription" required></textarea>
+            </div>
+
+            <select asp-for="@Model.ProductGroup.CategoryId">
+                @foreach (var item in @Model.Category)
+                {
+                    <option value="@item.Id">@item.Name</option>
+                }
+            </select>
+            <select asp-for="@Model.ProductGroup.ProductAttributeId">
+                @foreach (var productAttribute in @Model.Color)
+                {
+                    <option value="@productAttribute.Id">@productAttribute.Name</option>
+                }
+            </select>
+        </div>
+        <div class="col-6 mt-3">
+            <h3>Attributes</h3>
+            @for (int i = 0; i < 10; i++)
+            {
+                <div class="m-3">
+                    <table id="add_table" class="table" data-toggle="table" data-mobile-responsive="true">
+                        <thead>
+                            <tr>
+                                <th>Sku</th>
+                                <th>Price</th>
+                                <th>Discounted Price</th>
+                                <th>Stock</th>
+                                <th>Attribute</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <input type="hidden" asp-for="@Model.ProductGroup.Products[i].Id">
+                                <td>
+                                    <input type="text" class="form-control" asp-for="@Model.ProductGroup.Products[i].Sku">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" asp-for="@Model.ProductGroup.Products[i].Price">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control"
+                                    asp-for="@Model.ProductGroup.Products[i].DiscountedPrice">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" asp-for="@Model.ProductGroup.Products[i].Stock">
+                                </td>
+                                <td>
+                                    <select asp-for="@Model.ProductGroup.Products[i].ProductAttributeId">
+                                        @foreach (var productAttribute in @Model.Size)
+                                        {
+                                            <option value="@productAttribute.Id">@productAttribute.Name</option>
+                                        }
+                                    </select>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+        <div class="col-6">
+            <span>Add image</span>
+            <input type="file" asp-for="Upload" />
+        </div>
+        <button class="btn btn-primary" type="submit">Add</button>
+
+    </form>
+</div>
+}

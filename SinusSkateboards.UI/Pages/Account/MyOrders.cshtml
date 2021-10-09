@@ -1,0 +1,57 @@
+﻿@page
+@model SinusSkateboards.UI.Pages.Account.MyOrdersModel
+@{
+}
+
+<partial name="~/Pages/Account/_PartialUserMenu.cshtml"></partial>
+
+<div class="container px-2">
+    <div class="mb-2 d-flex justify-content-between align-items-center">
+    </div>
+    <div class="table-responsive">
+        <table class="table table-responsive table-borderless">
+            <thead>
+                <tr class="bg-light">
+                    <th scope="col">#</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Status</th>
+                    <th scope="col" class="text-end"><span>Total</span></th>
+                    <th scope="col" class="text-end"><span></span></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>12</td>
+                    <td>1 Oct, 21</td>
+                    <td><i class="fa-solid fa-check text-success"></i><span class="ms-1">Paid</span></td>
+                    <td class="text-end"><span class="fw-bolder">$0.99</span></td>
+                    <td><a href="">View</a></td>
+                </tr>
+                <tr>
+                    <td>14</td>
+                    <td>12 Oct, 21</td>
+                    <td><i class="fa-solid fa-xmark text-danger"></i><span class="ms-1">Failed</span></td>
+                    <td class="text-end"><span class="fw-bolder">$0.19</span></td>
+                </tr>
+                <tr>
+                    <td>17</td>
+                    <td>1 Nov, 21</td>
+                    <td><i class="fa fa-check-circle-o green"></i><span class="ms-1">Paid</span></td>
+                    <td class="text-end"><span class="fw-bolder">$1.99</span></td>
+                </tr>
+                <tr>
+                    <td>90</td>
+                    <td>19 Oct, 21</td>
+                    <td><i class="fa fa-check-circle-o green"></i><span class="ms-1">Paid</span></td>
+                    <td class="text-end"><span class="fw-bolder">$9.99</span></td>
+                </tr>
+                <tr>
+                    <td>12</td>
+                    <td>1 Oct, 21</td>
+                    <td><i class="fa fa-check-circle-o green"></i><span class="ms-1">Paid</span></td>
+                    <td class="text-end"><span class="fw-bolder">$0.99</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

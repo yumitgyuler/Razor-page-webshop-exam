@@ -1,0 +1,72 @@
+﻿@page
+@model SinusSkateboards.UI.Pages.Admin.OrdersModel
+@{
+    Layout = "../Shared/_Dasboard.cshtml";
+
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-8">
+            <div class="mb-2 d-flex justify-content-between align-items-center">
+            </div>
+            <div class="table-responsive">
+                <table class="table table-responsive table-borderless">
+                    <thead>
+                        <tr class="bg-light">
+                            <th scope="col">Order Nummer</th>
+                            <th scope="col">First Name</th>
+                            <th scope="col">Last Name</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Status</th>
+                            <th scope="col" class="text-end"><span>Total</span></th>
+                            <th scope="col" class="text-end"><span></span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var order in @Model.Orders)
+                        {
+                            <tr>
+                                <td>@order.OrderNumber</td>
+                                <td>@order.BillingAdress.FirstName</td>
+                                <td>@order.BillingAdress.LastName</td>
+                                <td>@order.OrderDate.ToString("yyyy-MM-dd")</td>
+                                @if (@order.OrderStatus.Name == "Processing")
+                                {
+                                    <td><button class="btn btn-success"><i class="fa-solid fa-person-walking"></i><span class="ms-1">Processing</span></button></td>
+                                }
+                                @if (@order.OrderStatus.Name == "Cancelled")
+                                {
+                                    <td><button class="btn btn-danger"><i class="fa-solid fa-x"></i><span class="ms-1">Cancelled</span></button></td>
+                                }
+                                @if (@order.OrderStatus.Name == "Refunded")
+                                {
+                                    <td><button class="btn btn-light"><i class="fa-solid fa-retweet"></i><span class="ms-1">Refunded</span></button></td>
+                                }
+                                @if (@order.OrderStatus.Name == "Delivered")
+                                {
+                                    <td><button class="btn btn-info"><i class="fa-solid fa-truck-fast"></i><span class="ms-1">Delivered</span></button></td>
+                                }
+                                @if (@order.Currency == "EUR")
+                                {
+                                    <td class="text-end"><span class="fw-bolder">@String.Format("€ {0:N2}", @order.OrderTotal)</span></td>
+                                
+                                }
+                                else
+                                {
+                                    <td class="text-end"><span class="fw-bolder">@String.Format("{0:N2}:-", @order.OrderTotal)</span></td>
+                                
+                                }
+                                <td>
+                                    <form method="POST">
+                                        <a asp-page="/Admin/OrderDetail" asp-route-id="@order.Id">View</a>
+                                    </form></td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,107 @@
+﻿@page
+@model SinusSkateboards.UI.Pages.Admin.IndexModel
+@{
+    Layout = "../Shared/_Dasboard.cshtml";
+}
+<div class="col py-3">
+    <div class="row">
+        <div class="col-lg-3 col-6">
+            <div class="small-box bg-success text-center">
+                <div class="inner text-color-light">
+                    <p>Processing</p>
+                    <h3>@Model.Processing</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-6">
+            <div class="small-box bg-danger text-center">
+                <div class="inner text-color-light">
+                    <p>Cancelled</p>
+                    <h3>@Model.Cancelled</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-6">
+            <div class="small-box bg-secondary text-center">
+                <div class="inner text-color-light">
+                    <p>Refunded</p>
+                    <h3>@Model.Refunded</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-6">
+            <div class="small-box bg-info text-center">
+                <div class="inner text-color-light">
+                    <p>Delivered</p>
+                    <h3>@Model.Delivered</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-6">
+            <h5>Top 5 selling products</h5>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">First</th>
+                        <th scope="col">Last</th>
+                        <th scope="col">Handle</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>Jacob</td>
+                        <td>Thornton</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td colspan="2">Larry the Bird</td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-6">
+            <h5>Last 5 Customers</h5>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">First</th>
+                        <th scope="col">Last</th>
+                        <th scope="col">Handle</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>Jacob</td>
+                        <td>Thornton</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td colspan="2">Larry the Bird</td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

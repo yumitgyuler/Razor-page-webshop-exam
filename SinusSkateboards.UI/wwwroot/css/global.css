@@ -1,0 +1,206 @@
+/* Fonts */
+@import url("https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Poppins:wght@500;700&display=swap");
+
+body {
+  font-family: "Poppins" !important;
+  height: 100%;
+  margin: 0;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+a {
+  text-decoration: none !important;
+  cursor: pointer !important;
+}
+/* Container */
+
+.container {
+  max-width: 1320px;
+}
+
+/* Color */
+.main-color {
+  color: #8c3245;
+}
+.nav-bg-color {
+  background-color: #f0f0f1;
+}
+.bg-main {
+  background-color: #393d4b !important;
+}
+.text-color-light {
+  color: #f1f1f1 !important;
+}
+/* Button */
+
+.btn-primary,
+.btn-primary:active,
+.btn-primary:visited,
+.btn-primary:focus {
+  background-color: #c96174 !important;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 8px !important;
+  padding: 8px 40px !important;
+  border-color: #c96174 !important;
+  border: 0px;
+  color: #fff;
+  font-weight: bold !important;
+  cursor: pointer !important;
+}
+
+.btn-secondary,
+.btn-secondary:active,
+.btn-secondary:visited,
+.btn-secondary:focus {
+  background-color: #f1f1f1 !important;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 8px !important;
+  padding: 8px 40px !important;
+  border-color: #f1f1f1 !important;
+  border: 0px;
+  color: #393d4b !important;
+  font-weight: bold !important;
+}
+.btn-info,
+.btn-info:active,
+.btn-info:visited,
+.btn-info:focus {
+  background-color: #3a3e4a !important;
+  font-size: 12px !important;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 8px !important;
+  padding: 8px 20px !important;
+  border-color: #3a3e4a !important;
+  border: 0px;
+  color: #f1f1f1 !important;
+}
+.btn-success,
+.btn-success:active,
+.btn-success:visited,
+.btn-success:focus {
+  font-size: 12px !important;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 8px !important;
+  padding: 8px 20px !important;
+  border: 0px;
+}
+.btn-danger,
+.btn-danger:active,
+.btn-danger:visited,
+.btn-danger:focus {
+  font-size: 12px !important;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 8px !important;
+  padding: 8px 20px !important;
+  border: 0px;
+}
+.btn-light,
+.btn-light:active,
+.btn-light:visited,
+.btn-light:focus {
+  background-color: #9ba1b3 !important;
+  border-color: #9ba1b3 !important;
+  font-size: 12px !important;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 8px !important;
+  padding: 8px 20px !important;
+  border: 0px;
+}
+/* h */
+h1 {
+  font-weight: bold !important;
+  color: #8c3245;
+}
+h2 {
+  font-weight: bold !important;
+  color: #1a0b5b !important;
+  font-size: 42px !important;
+  line-height: 63px !important;
+}
+h5 {
+  color: #8c3245 !important;
+  font-weight: bold !important;
+}
+
+/* Select */
+
+select {
+  background-color: #f1f1f1 !important;
+  color: #393d4b;
+  padding: 10px;
+  margin-right: 15px !important;
+  margin-bottom: 15px !important;
+  width: 250px;
+  height: 50px;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border: none;
+  border-radius: 8px;
+  background: url("https://localhost:5001/images/images/arrow-down.png")
+    no-repeat right #ddd;
+  -webkit-appearance: none;
+  background-position-x: 200px;
+}
+/* p */
+
+p {
+  font-size: 17px;
+}
+
+.span-title {
+  font-style: normal;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* Input */
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* Radio Button */
+
+.radio-toolbar input[type="radio"] {
+  opacity: 0;
+  width: 0;
+}
+
+.radio-toolbar label {
+  background-color: #3a3e4a;
+  font-size: 12px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+  padding: 8px 20px;
+  border-color: #3a3e4a;
+  border: 0px;
+  color: #f1f1f1;
+}
+
+.radio-toolbar label:hover {
+  background-color: #9ba1b3;
+}
+
+.radio-toolbar input[type="radio"]:focus + label {
+  border: 2px dashed #c2c3c4;
+}
+
+.radio-toolbar input[type="radio"]:checked + label {
+  background-color: #f1f0f1;
+  border-color: #f1f0f1;
+  color: #393e4c;
+}

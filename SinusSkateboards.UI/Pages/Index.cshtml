@@ -1,0 +1,119 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+    var clientCurrency = HttpContext.Request.Cookies["Currency"];
+    var currencyIcon = "";
+    if (clientCurrency == "EUR")
+    {
+        currencyIcon = "€ {0:N2}";
+    }
+    else
+    {
+        currencyIcon = "{0:N2}:-";
+    }
+}
+
+<div class="hero-image">
+    <div class="container">
+        <div class="hero-text pt-5">
+            <h1 class="display-3 pt-5">The world's best skateboards</h1>
+            <a href="#" class="btn btn-primary mt-xl-5 me-xl-3 mt-4">Skateboards</a>
+            <a href="#" class="btn btn-secondary mt-xl-5 mt-4">All Categories</a>
+        </div>
+
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-12 text-center m-xl-5 m-2">
+            <h2>Categories</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xl-3 col-md-6 col-12 categories-card text-center">
+            <a href="">
+                <img src="~/images/images/skateboard.jpg" alt="">
+                <h5 class="pt-3">Skateboards</h5>
+            </a>
+        </div>
+        <div class="col-xl-3 col-md-6 col-12 categories-card text-center">
+            <a href="">
+                <img src="~/images/images/hoodies.jpg" alt="">
+                <h5 class="pt-3">Hoodie</h5>
+            </a>
+        </div>
+        <div class="col-xl-3 col-md-6 col-12 categories-card text-center">
+            <a href="">
+                <img src="~/images/images/t-shirt.jpg" alt="">
+                <h5 class="pt-3">T-shirt</h5>
+            </a>
+        </div>
+        <div class="col-xl-3 col-md-6 col-12 categories-card text-center">
+            <a href="">
+                <img src="~/images/images/caps.jpg" alt="">
+                <h5 class="pt-3">Caps</h5>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-12 text-center m-xl-5 m-2">
+            <h2>Featured Products</h2>
+        </div>
+    </div>
+    <div class="row">
+        @{
+            var fetauredProduct = 0;
+        }
+        @foreach (var group in Model.ProductGroups)
+        {
+            if (fetauredProduct == 6)
+            {
+                continue;
+            }
+            fetauredProduct += 1;
+            var result = group.ToList();
+            var products = result[0].Products.ToList();
+
+            <div class="col-xl-4 col-md-6 col-12 mb-5 text-center">
+                <div class="card products-card p-4">
+                    <div class="d-flex flex-column justify-content-center">
+                        <div class="main_image">
+                            <img src="~/images/products/@result[0].Thumbnail.ToString()" id="@group.Key.ToString()"
+                            width="350" />
+                        </div>
+                        <div class="thumbnail_images">
+                            <ul id="thumbnail">
+                                @foreach (var item in result)
+                                {
+                                    <li>
+                                        <img id="@group.Key.ToString()" onclick="changeImage(this)"
+                                    src="~/images/products/@item.Thumbnail.ToString()" width="50" />
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                        <div class="product-card-info">
+                            <h5 class="pt-3">@result[0].Title</h5>
+                            @if (@products[0].DiscountedPrice is 0)
+                            {
+                                <span class="discount-price">@String.Format(currencyIcon, @products[0].Price)</span><br>
+                            }
+                            else
+                            {
+                                <span class="discount-price">@String.Format(currencyIcon, @products[0].DiscountedPrice)</span>
+                                <span class="regular-price pl-2">@String.Format(currencyIcon, @products[0].Price)</span><br>
+                            }
+                            <a class="btn btn-primary mt-3" asp-page="/Shop/Product" asp-route-id="@products[0].Id">Buy
+                                Now!</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

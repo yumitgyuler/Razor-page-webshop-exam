@@ -1,0 +1,133 @@
+﻿@page
+@model SinusSkateboards.UI.Pages.Admin.OrderDetailModel
+@{
+    Layout = "../Shared/_Dasboard.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <h5>Billing Adress:</h5>
+            <span>@Model.Order.BillingAdress.FirstName
+                @Model.Order.BillingAdress.LastName</span><br>
+            <span>@Model.Order.BillingAdress.CompanyName</span><br>
+            <span>@Model.Order.BillingAdress.Street</span><br>
+            <span>@Model.Order.BillingAdress.City,
+                @Model.Order.BillingAdress.Zip</span><br>
+            <span>@Model.Order.BillingAdress.Country</span><br>
+            <span>@Model.Order.BillingAdress.PhoneNumber</span><br>
+            <span>@Model.Order.BillingAdress.Email</span>
+        </div>
+        @if (@Model.Order.BillingAdress.ShipToOtherAdress)
+        {
+            <div class="col-6">
+                <h5>Shipping Adress:</h5>
+                <span>@Model.Order.ShippingAdress.FirstName
+                    @Model.Order.ShippingAdress.LastName</span><br>
+                <span>@Model.Order.ShippingAdress.Street</span><br>
+                <span>@Model.Order.ShippingAdress.City,
+                    @Model.Order.ShippingAdress.Zip</span><br>
+                <span>@Model.Order.ShippingAdress.Country</span><br>
+            </div>
+        }
+        else
+        {
+            <div class="col-6">
+                <h5>Shipping Adress:</h5>
+                <span>@Model.Order.BillingAdress.FirstName
+                    @Model.Order.BillingAdress.LastName</span><br>
+                <span>@Model.Order.BillingAdress.Street</span><br>
+                <span>@Model.Order.BillingAdress.City,
+                    @Model.Order.BillingAdress.Zip</span><br>
+                <span>@Model.Order.BillingAdress.Country</span><br>
+            </div>
+        }
+        <div class="col-8">
+            <div class="table-responsive">
+                <table class="table table-responsive table-borderless">
+                    <thead>
+                        <tr class="bg-light">
+                            <th scope="col"></th>
+                            <th scope="col">Product</th>
+                            <th scope="col" class="text-end">Price</th>
+                            <th scope="col" class="text-end"><span>Quantity</span></th>
+                            <th scope="col" class="text-end"><span>Total</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var orderItem in @Model.Order.OrderDetails)
+                        {
+                            <tr>
+                                <td><img src="~/images/products/@orderItem.Product.ProductGroup.Thumbnail" width="100"></td>
+                                <td class="align-middle">@orderItem.Product.ProductGroup.Title -
+                                    @orderItem.Product.ProductGroup.ProductAttribute.Name -
+                                    @orderItem.Product.ProductAttribute.Name</td>
+
+                                @if (@Model.Order.Currency == "EUR")
+                                {
+                                    <td class="text-end align-middle"><span class="fw-bolder">@String.Format("€ {0:N2}",
+                                    @orderItem.UnitPrice)</span></td>
+                                }
+                                else
+                                {
+                                    <td class="text-end align-middle"><span class="fw-bolder">@String.Format("{0:N2}:-",
+                                    @orderItem.UnitPrice)</span></td>
+                                }
+                                <td class="text-end align-middle">@orderItem.Quantity</td>
+                                @if (@Model.Order.Currency == "EUR")
+                                {
+                                    <td class="text-end align-middle"><span class="fw-bolder">@String.Format("€ {0:N2}",
+                                    @orderItem.UnitPrice*@orderItem.Quantity)</span></td>
+                                }
+                                else
+                                {
+                                    <td class="text-end align-middle"><span class="fw-bolder">@String.Format("{0:N2}:-",
+                                    @orderItem.UnitPrice*@orderItem.Quantity)</span></td>
+                                }
+                            </tr>
+                        }
+                        <tr>
+                            <td></td>
+                            <td class="align-middle"></td>
+                            <td class="text-end align-middle"></td>
+                            <td class="text-end align-middle">Total:</td>
+                            @if (@Model.Order.Currency == "EUR")
+                            {
+                                <td class="text-end align-middle"><span class="fw-bolder">@String.Format("€ {0:N2}",
+                                    @Model.Order.OrderTotal)</span></td>
+                            }
+                            else
+                            {
+                                <td class="text-end align-middle"><span class="fw-bolder">@String.Format("€ {0:N2}",
+                                    @Model.Order.OrderTotal)</span></td>
+                            }
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-4">
+            @if (@Model.Order.OrderStatus.Name == "Processing")
+            {
+                <td><button class="btn btn-success"><i class="fa-solid fa-person-walking"></i><span
+                        class="ms-1">Processing</span></button></td>
+            }
+            @if (@Model.Order.OrderStatus.Name == "Cancelled")
+            {
+                <td><button class="btn btn-danger"><i class="fa-solid fa-x"></i><span class="ms-1">Cancelled</span></button>
+                </td>
+            }
+            @if (@Model.Order.OrderStatus.Name == "Refunded")
+            {
+                <td><button class="btn btn-light"><i class="fa-solid fa-retweet"></i><span
+                        class="ms-1">Refunded</span></button>
+                </td>
+            }
+            @if (@Model.Order.OrderStatus.Name == "Delivered")
+            {
+                <td><button class="btn btn-info"><i class="fa-solid fa-truck-fast"></i><span
+                        class="ms-1">Delivered</span></button></td>
+            }
+        </div>
+    </div>
+</div>

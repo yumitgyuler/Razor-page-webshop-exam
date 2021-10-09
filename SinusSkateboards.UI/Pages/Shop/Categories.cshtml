@@ -1,0 +1,127 @@
+﻿@page
+@model SinusSkateboards.UI.Pages.Shop.CategoriesModel
+@{
+    var clientCurrency = HttpContext.Request.Cookies["Currency"];
+    var currencyIcon = "";
+    if (clientCurrency == "EUR")
+    {
+        currencyIcon = "€ {0:N2}";
+    }
+    else
+    {
+        currencyIcon = "{0:N2}:-";
+    }
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col mt-5">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#filter"
+                aria-controls="filter" aria-expanded="false" aria-label="Toggle navigation">
+                Filter <i class="fa-solid fa-filter"></i>
+            </button>
+            <div class="collapse navbar-collapse mt-3" id="filter">
+                <form method="POST" asp-page-handler="Filter">
+                    <select name="color">
+                        <option value="">Color</option>
+                        <option value="Black">Black</option>
+                        <option value="Gray">Gray</option>
+                        <option value="Beige">Beige</option>
+                        <option value="Brown">Brown</option>
+                        <option value="Blue">Blue</option>
+                        <option value="Dark Blue">Dark Blue</option>
+                        <option value="Purple">Purple</option>
+                        <option value="Pink">Pink</option>
+                        <option value="Red">Red</option>
+                        <option value="Orange">Orange</option>
+                        <option value="Peach">Peach</option>
+                        <option value="Yellow">Yellow</option>
+                        <option value="Light Green">Light Green</option>
+                        <option value="Green">Green</option>
+                        <option value="Teal">Teal</option>
+                        <option value="Turquoise">Turquoise</option>
+                        <option value="Silver">Silver</option>
+                        <option value="Gold">Gold</option>
+                        <option value="Multi Colored">Multi Colored</option>
+                    </select>
+                    <select name="category">
+                        <option value="">Category</option>
+                        <option value="Skateboard">Skateboard</option>
+                        <option value="Skateboard wheels">Skateboard wheels</option>
+                        <option value="Hoodie">Hoodie</option>
+                        <option value="T-Shirt">T-Shirt</option>
+                        <option value="Cap">Cap</option>
+                    </select>
+                    <select name="size">
+                        <option value="">Size</option>
+                        <option value="S">S</option>
+                        <option value="M">M</option>
+                        <option value="L">L</option>
+                        <option value="XL">XL</option>
+                        <option value="XXL">XXL</option>
+                        <option value="XXL">XXXL</option>
+                        <option value="One Size">One Size</option>
+                    </select>
+                    <select name="price">
+                        <option value="">Price</option>
+                        <option value="100">0-100</option>
+                        <option value="200">101-200</option>
+                        <option value="300">201-300</option>
+                        <option value="400">301-400</option>
+                        <option value="500">401-500</option>
+                        <option value="600">501-600</option>
+                        <option value="700">601-700</option>
+                    </select>
+                    <input name="searchText" value="@Model.SearchText" asp-for="SearchText" type="hidden">
+                    <button class="btn btn-primary">Filter</button>
+                </form>
+            </div>
+        </div>
+        <div class="col-12 text-center m-xl-5 m-2">
+            <h2>@Model.Title</h2>
+        </div>
+        @foreach (var group in Model.ProductGroups)
+        {
+            var result = group.ToList();
+            var products = result[0].Products.ToList();
+            @if (products.Count != 0)
+            {
+                <div class="col-xl-4 col-md-6 col-12 mb-5 text-center">
+                    <div class="card products-card p-4">
+                        <div class="d-flex flex-column justify-content-center">
+                            <div class="main_image">
+                                <img src="~/images/products/@result[0].Thumbnail.ToString()" id="@group.Key.ToString()"
+                            width="350" />
+                            </div>
+                            <div class="thumbnail_images">
+                                <ul id="thumbnail">
+                                    @foreach (var item in result)
+                                    {
+                                        <li>
+                                            <img id="@group.Key.ToString()" onclick="changeImage(this)"
+                                    src="~/images/products/@item.Thumbnail.ToString()" width="50" />
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                            <div class="product-card-info">
+                                <h5 class="pt-3">@result[0].Title</h5>
+                                @if (@products[0].DiscountedPrice is 0)
+                                {
+                                    <span class="discount-price">@String.Format(currencyIcon, @products[0].Price)</span><br>
+                                }
+                                else
+                                {
+                                    <span class="discount-price">@String.Format(currencyIcon, @products[0].DiscountedPrice)</span>
+                                    <span class="regular-price pl-2">@String.Format(currencyIcon, @products[0].Price)</span><br>
+                                }
+                                <a class="btn btn-primary mt-3" asp-page="/Shop/Product" asp-route-id="@products[0].Id">Buy
+                                    Now!</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>

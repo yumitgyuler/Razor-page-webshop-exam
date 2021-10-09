@@ -1,0 +1,158 @@
+﻿@page
+@using Newtonsoft.Json;
+@model SinusSkateboards.UI.Pages.Admin.ProductDetailModel
+@{
+    Layout = "../Shared/_Dasboard.cshtml";
+    int index = 1;
+}
+
+<div class="row ms-5 mt-5">
+    <form method="POST" enctype="multipart/form-data">
+        <div class="col-6">
+            <h3>Product</h3>
+            <div class="mb-3">
+                <span class="fw-bold"><label for="@Model.ProductGroup.ParrentSku" class="form-label">Parrent
+                        Sku</label></span>
+                <input type="text" name="ProductGroup.ParrentSku" class="form-control"
+                    asp-for="@Model.ProductGroup.ParrentSku" value="@Model.ProductGroup.ParrentSku">
+            </div>
+            <div class="mb-3">
+                <span class="fw-bold"><label for="@Model.ProductGroup.Title" class="form-label">Title</label></span>
+                <input type="text" name="ProductGroup.Title" class="form-control" asp-for="@Model.ProductGroup.Title"
+                    value="@Model.ProductGroup.Title">
+            </div>
+            <div class="mb-3">
+                <span class="fw-bold"><label for="@Model.ProductGroup.ShortDescription" class="form-label">Short
+                        Description</label></span>
+                <textarea name="ProductGroup.ShortDescription" class="form-control"
+                    asp-for="@Model.ProductGroup.ShortDescription"
+                    value="@Model.ProductGroup.ShortDescription"></textarea>
+            </div>
+            <div class="mb-3">
+                <span class="fw-bold"><label for="@Model.ProductGroup.ShortDescription" class="form-label">Detail
+                        Description</label></span>
+                <textarea name="ProductGroup.DetailDescription" class="form-control"
+                    asp-for="@Model.ProductGroup.DetailDescription"
+                    value="@Model.ProductGroup.DetailDescription"></textarea>
+            </div>
+
+            <input type="hidden" name="ProductGroup.Id" class="form-control" asp-for="@Model.ProductGroup.Id"
+                value="@Model.ProductGroup.Id">
+
+            <select asp-for="@Model.ProductGroup.CategoryId">
+                @foreach (var item in @Model.Category)
+                {
+                    if (item.Name == Model.ProductGroup.Category.Name)
+                    {
+                        <option value="@item.Id" selected>@item.Name</option>
+                    }
+                    else
+                    {
+                        <option value="@item.Id">@item.Name</option>
+                    }
+
+                }
+            </select>
+            <select asp-for="@Model.ProductGroup.ProductAttributeId">
+                @foreach (var productAttribute in @Model.ProductAttributes)
+                {
+                    if (productAttribute.Name == Model.ProductGroup.ProductAttribute.Name)
+                    {
+                        <option value="@productAttribute.Id" selected>@productAttribute.Name</option>
+                    }
+                    else
+                    {
+                        <option value="@productAttribute.Id">@productAttribute.Name</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="col-6 mt-3">
+            <h3>Attributes</h3>
+            @for (int i = 0; i < Model.ProductGroup.Products.Count(); i++)
+            {
+                <div class="m-3">
+                    <table id="add_table" class="table" data-toggle="table" data-mobile-responsive="true">
+                        <thead>
+                            <tr>
+                                <th>Sku</th>
+                                <th>Price</th>
+                                <th>Discounted Price</th>
+                                <th>Stock</th>
+                                <th>Attribute</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <input type="hidden" asp-for="@Model.ProductGroup.Products[i].Id"
+                                value="@Model.ProductGroup.Products[i].Id">
+                                <td>
+                                    <input type="text" class="form-control" asp-for="@Model.ProductGroup.Products[i].Sku"
+                                    value="@Model.ProductGroup.Products[i].Sku">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" asp-for="@Model.ProductGroup.Products[i].Price"
+                                    value="@Model.ProductGroup.Products[i].Price">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control"
+                                    asp-for="@Model.ProductGroup.Products[i].DiscountedPrice"
+                                    value="@Model.ProductGroup.Products[i].DiscountedPrice">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" asp-for="@Model.ProductGroup.Products[i].Stock"
+                                    value="@Model.ProductGroup.Products[i].Stock">
+                                </td>
+                                <td>
+                                    <select id="productAttributeType+@index+1"
+                                    asp-for="@Model.ProductGroup.Products[i].ProductAttributeId">
+                                        @if (Model.ProductGroup.Products[i].ProductAttribute.AttributeType.Name == "Size")
+                                        {
+                                            @foreach (var productAttribute in @Model.Size)
+                                            {
+                                                if (productAttribute.Name == Model.ProductGroup.Products[i].ProductAttribute.Name)
+                                                {
+                                                    <option value="@productAttribute.Id" selected>@productAttribute.Name</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@productAttribute.Id">@productAttribute.Name</option>
+                                                }
+                                            }
+                                        }
+                                        @if (Model.ProductGroup.Products[i].ProductAttribute.AttributeType.Name == "Color")
+                                        {
+                                            @foreach (var productAttribute in @Model.Color)
+                                            {
+                                                if (productAttribute.Name == Model.ProductGroup.Products[i].ProductAttribute.Name)
+                                                {
+                                                    <option value="@productAttribute.Id" selected>@productAttribute.Name</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@productAttribute.Id">@productAttribute.Name</option>
+                                                }
+                                            }
+                                        }
+                                    </select>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                index++;
+            }
+        </div>
+        <div class="col-6">
+            <img id="123" onclick="changeImage(this)" src="~/images/products/@Model.ProductGroup.Thumbnail"
+                width="80" />
+
+            <span>Add new image</span>
+            <input type="file" asp-for="Upload" />
+        </div>
+        <button class="btn btn-primary" type="submit">Update</button>
+
+    </form>
+</div>
+}

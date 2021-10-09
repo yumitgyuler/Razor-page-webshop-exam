@@ -1,0 +1,63 @@
+﻿@page
+@model SinusSkateboards.UI.Pages.Admin.ProductsModel
+@{
+    Layout = "../Shared/_Dasboard.cshtml";
+}
+
+<div class="col-10">
+    <h5>Products</h5>
+    <div class="table-responsive">
+        <table class="table table-responsive">
+            <thead>
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col">SKU</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Model</th>
+                    <th scope="col">Price (SEK)</th>
+                    <th scope="col">Price (EUR)</th>
+                    <th scope="col">Variant</th>
+                    <th scope="col">Handle</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var group in @Model.ProductGroups)
+                {
+                    <tr>
+                        <td><img src="~/images/products/@group.Thumbnail" width="50"></td>
+                        <th scope="row">@group.ParrentSku</th>
+                        <td>@group.Title</td>
+                        <td>@group.Category.Name</td>
+                        <td>@group.ProductAttribute.Name</td>
+                        @if (group.Products[0].DiscountedPrice is 0)
+                        {
+                            <td>@String.Format("{0:N2}:-", group.Products[0].Price)</td>
+                        }
+                        else
+                        {
+                            <td>@String.Format("{0:N2}:-", group.Products[0].DiscountedPrice)
+                                <span class="text-decoration-line-through">@String.Format("{0:N2}:-",
+                            group.Products[0].Price)</span>
+                            </td>
+                        }
+                        @if (group.Products[0].DiscountedPrice is 0)
+                        {
+                            <td>@String.Format("€ {0:N2}", group.Products[0].Price/@Model.ExchangeEur)</td>
+                        }
+                        else
+                        {
+                            <td>@String.Format("€ {0:N2}", group.Products[0].DiscountedPrice/@Model.ExchangeEur)
+                                <span class="text-decoration-line-through">@String.Format("€ {0:N2}",
+                            group.Products[0].Price/@Model.ExchangeEur)</span>
+                            </td>
+                        }
+                        <td>@group.Products.Count()</td>
+                        <td><a asp-page="/Admin/ProductDetail" asp-route-productGroupId="@group.Id">View</a></td>
+                        <td></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
